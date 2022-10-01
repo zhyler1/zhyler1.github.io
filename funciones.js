@@ -1,18 +1,18 @@
 var dbVacas = localStorage.getItem("dbVacas"); //Obtener datos de localStorage
-var operacion = "A"; //"A"=agregar; "E"=edtidar
-dbVacas = JSON.parse(dbVacas); // Covertir a objeto
-if (dbVacas === null) // Si no existe, creamos un array vacio.
+var operacion = "A"; 
+dbVacas = JSON.parse(dbVacas); 
+if (dbVacas === null) 
     dbVacas = [];
 
 
 function Mensaje(t){
         switch (t) {
-            case 1: //
+            case 1: 
                 $(".mensaje-alerta").append(
                     "<div class='alert alert-success' role='alert'>Se agrego con exito la vaca</div>"
                 );
                 break;
-            case 2: //
+            case 2: 
                 $(".mensaje-alerta").append(
                     "<div class='alert alert-danger' role='alert'>Se elimino la vaca</div>"
                 );
@@ -24,7 +24,7 @@ function Mensaje(t){
 
 
 function AgregarVaca () {
-    // Seleccionamos los datos de los inputs de formulario
+    
     var datos_cliente = JSON.stringify({
         Nombre : $("#nombre").val(),
         Correo : $("#correo").val(),
@@ -32,7 +32,7 @@ function AgregarVaca () {
         Fecha_nacimiento : $("#fecha_nacimiento").val(),
     });
 
-    dbVacas.push(datos_cliente); // Guardar datos en el array definido globalmente
+    dbVacas.push(datos_cliente); 
     localStorage.setItem("dbVacas", JSON.stringify(dbVacas));
 
 
@@ -98,7 +98,7 @@ function contarVacas(){
 }
 
 function Eliminar(e){
-    dbVacas.splice(e, 1); // Args (posición en el array, numero de items a eliminar)
+    dbVacas.splice(e, 1); 
     localStorage.setItem("dbVacas", JSON.stringify(dbVacas));
     return Mensaje(2);
 }
@@ -111,29 +111,29 @@ function Editar() {
         Fecha_nacimiento : $("#fecha_nacimiento").val(),
     });
     localStorage.setItem("dbVacas", JSON.stringify(dbVacas));
-    operacion = "A"; //Regresamos la valor original
+    operacion = "A"; 
     return true;
 
 }
 
 $(".btnEliminar").bind("click", function(){
     alert("¿ Me quieres eliminar ?");
-    indice_selecionado = $(this).attr("id"); // "this" contiene el elemento clikeado en el contexto actual
+    indice_selecionado = $(this).attr("id"); 
     console.log(indice_selecionado);
     console.log(this);
-    Eliminar(indice_selecionado); // Eliminamos el elemento llamando la funcion de eliminar
+    Eliminar(indice_selecionado); 
     ListarVacas();
 });
 
 $(".btnEditar").bind("click", function() {
     alert("¿ Me quieres editar ?");
-    // Cambiamos el modo
+    
     $(".modo").html("<span class='glyphicon glyphicon-pencil'> </span> Modo edición");
     operacion = "E";
     indice_selecionado = $(this).attr("id");
     console.log(indice_selecionado);
     console.log(this);
-    // Llemanos el formulario con los datos actuales de la vaca a editar
+    
     var vacaItem = JSON.parse(dbVacas[indice_selecionado]);
     $("#nombre").val(vacaItem.Nombre);
     $("#correo").val(vacaItem.Correo);
@@ -144,7 +144,7 @@ $(".btnEditar").bind("click", function() {
 
 
 contarVacas();
-// Esperar el evento de envio del formulario !!
+
 $("#vacas-form").bind("submit", function() {
     debugger;
     if (operacion == "A")
